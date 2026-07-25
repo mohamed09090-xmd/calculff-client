@@ -1,5 +1,12 @@
 # CalculFF Client
 
-تطبيق Flutter مخصص لزبائن منصة CalculFF. هذا المستودع منفصل عن تطبيق الإدارة ويعتمد على عقود Supabase الموجودة في `mohamed09090-xmd/calculff` دون إدارة migrations من هنا.
+تطبيق Flutter Android مخصص لزبائن منصة CalculFF.
 
-الحالة الحالية: Bootstrap أولي لمشروع Android؛ نظام المصادقة سيُنفذ على فرع ميزة مستقل.
+- اسم المشروع: `calculff_client`
+- اسم التطبيق: **CalculFF Client**
+- Android Application ID: `com.gm0h1.calculffclient`
+- الإصدار: `0.1.0+1`
+- Android minSdk: 23
+- Java: 17
+
+هذا هو Bootstrap فقط. نظام المصادقة الآمن يُنفذ على فرع `feat/client-foundation-auth`، بينما تبقى migrations وعقود Supabase في `mohamed09090-xmd/calculff`.

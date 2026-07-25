@@ -1,0 +1,22 @@
+name: calculff_client
+description: Secure Android client for the CalculFF platform.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.10.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
