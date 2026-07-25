@@ -133,7 +133,9 @@ class AuthController extends StateNotifier<AuthState> {
     _cooldownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       final next = state.resendCooldownSeconds - 1;
       if (next <= 0) timer.cancel();
-      state = state.copyWith(resendCooldownSeconds: next.clamp(0, 60));
+      state = state.copyWith(
+        resendCooldownSeconds: next.clamp(0, 60).toInt(),
+      );
     });
   }
 

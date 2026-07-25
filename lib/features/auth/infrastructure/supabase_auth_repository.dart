@@ -90,8 +90,8 @@ class SupabaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<void> resendConfirmation(String email) {
-    return _client.auth.resend(
+  Future<void> resendConfirmation(String email) async {
+    await _client.auth.resend(
       type: OtpType.signup,
       email: email.trim().toLowerCase(),
       emailRedirectTo: redirectUrl,
@@ -105,16 +105,16 @@ class SupabaseAuthRepository implements AuthRepository {
   }
 
   @override
-  Future<void> requestPasswordReset(String email) {
-    return _client.auth.resetPasswordForEmail(
+  Future<void> requestPasswordReset(String email) async {
+    await _client.auth.resetPasswordForEmail(
       email.trim().toLowerCase(),
       redirectTo: redirectUrl,
     );
   }
 
   @override
-  Future<void> updatePassword(String password) {
-    return _client.auth.updateUser(UserAttributes(password: password));
+  Future<void> updatePassword(String password) async {
+    await _client.auth.updateUser(UserAttributes(password: password));
   }
 
   @override

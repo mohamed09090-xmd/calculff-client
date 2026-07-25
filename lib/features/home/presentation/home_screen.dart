@@ -56,7 +56,7 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
           ),
-          const Spacer(),
+          const SizedBox(height: 36),
           SegmentedButton<String>(
             segments: [
               ButtonSegment(value: 'ar', label: Text(l10n.arabic)),
