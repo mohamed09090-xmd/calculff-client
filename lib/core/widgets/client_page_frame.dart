@@ -18,7 +18,9 @@ class ClientPageFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: title == null ? null : AppBar(title: Text(title!), actions: actions),
+      appBar: title == null
+          ? null
+          : AppBar(title: Text(title!), actions: actions),
       body: SafeArea(
         child: Stack(
           children: [

@@ -28,8 +28,10 @@ class HomeScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(l10n.helloUser(name),
-              style: Theme.of(context).textTheme.headlineMedium),
+          Text(
+            l10n.helloUser(name),
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           const SizedBox(height: 12),
           Row(
             children: [
@@ -64,7 +66,9 @@ class HomeScreen extends ConsumerWidget {
             ],
             selected: {ref.watch(localeControllerProvider).languageCode},
             onSelectionChanged: (value) {
-              ref.read(localeControllerProvider.notifier).setLocale(value.first);
+              ref
+                  .read(localeControllerProvider.notifier)
+                  .setLocale(value.first);
             },
           ),
           const SizedBox(height: 12),

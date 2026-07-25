@@ -5,10 +5,7 @@ void main() {
   group('AuthValidators', () {
     test('validates email', () {
       expect(AuthValidators.email('client@example.com'), isNull);
-      expect(
-        AuthValidators.email('invalid'),
-        ValidationIssue.invalidEmail,
-      );
+      expect(AuthValidators.email('invalid'), ValidationIssue.invalidEmail);
     });
 
     test('validates trimmed name length', () {

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('bootstrap screen provides an accessible loading state',
-      (tester) async {
+  testWidgets('bootstrap screen provides an accessible loading state', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       const MaterialApp(
         locale: Locale('ar'),

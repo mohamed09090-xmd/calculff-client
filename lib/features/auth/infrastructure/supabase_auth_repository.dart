@@ -10,9 +10,9 @@ class SupabaseAuthRepository implements AuthRepository {
     required SupabaseClient client,
     required SecureSupabaseLocalStorage localStorage,
     required PendingProfileStore pendingProfileStore,
-  })  : _client = client,
-        _localStorage = localStorage,
-        _pendingProfileStore = pendingProfileStore;
+  }) : _client = client,
+       _localStorage = localStorage,
+       _pendingProfileStore = pendingProfileStore;
 
   static const redirectUrl = 'calculffclient://auth-callback';
 
@@ -30,7 +30,8 @@ class SupabaseAuthRepository implements AuthRepository {
       });
 
   @override
-  AuthSessionInfo? get currentSession => _mapSession(_client.auth.currentSession);
+  AuthSessionInfo? get currentSession =>
+      _mapSession(_client.auth.currentSession);
 
   @override
   Future<AuthSessionInfo> signIn({

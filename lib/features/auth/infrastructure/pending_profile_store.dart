@@ -32,11 +32,7 @@ class PendingProfileStore {
       if (fullName is! String || phone is! String || locale is! String) {
         return null;
       }
-      return PendingProfile(
-        fullName: fullName,
-        phone: phone,
-        locale: locale,
-      );
+      return PendingProfile(fullName: fullName, phone: phone, locale: locale);
     } on FormatException {
       return null;
     }

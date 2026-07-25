@@ -29,7 +29,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final profile = ref.read(authControllerProvider).profile;
     _name = TextEditingController(text: profile?.fullName ?? '');
     _phone = TextEditingController(text: profile?.phone ?? '');
-    _locale = profile?.locale ?? ref.read(localeControllerProvider).languageCode;
+    _locale =
+        profile?.locale ?? ref.read(localeControllerProvider).languageCode;
   }
 
   @override
@@ -154,8 +155,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ? null
                   : () async {
                       if (!(_formKey.currentState?.validate() ?? false)) return;
-                      ref.read(localeControllerProvider.notifier).setLocale(_locale);
-                      await ref.read(authControllerProvider.notifier).updateProfile(
+                      ref
+                          .read(localeControllerProvider.notifier)
+                          .setLocale(_locale);
+                      await ref
+                          .read(authControllerProvider.notifier)
+                          .updateProfile(
                             fullName: _name.text,
                             phone: _phone.text,
                             locale: _locale,

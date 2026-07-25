@@ -9,8 +9,8 @@ import 'auth_error_mapper.dart';
 
 class AuthController extends StateNotifier<AuthState> {
   AuthController({required ClientRuntimeBootstrap runtimeBootstrap})
-      : _runtimeBootstrap = runtimeBootstrap,
-        super(const AuthState.initializing());
+    : _runtimeBootstrap = runtimeBootstrap,
+      super(const AuthState.initializing());
 
   final ClientRuntimeBootstrap _runtimeBootstrap;
   AuthRepository? _repository;
@@ -133,9 +133,7 @@ class AuthController extends StateNotifier<AuthState> {
     _cooldownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       final next = state.resendCooldownSeconds - 1;
       if (next <= 0) timer.cancel();
-      state = state.copyWith(
-        resendCooldownSeconds: next.clamp(0, 60).toInt(),
-      );
+      state = state.copyWith(resendCooldownSeconds: next.clamp(0, 60).toInt());
     });
   }
 
@@ -266,7 +264,8 @@ class AuthController extends StateNotifier<AuthState> {
     }
     ClientProfile? profile;
     try {
-      profile = await repository?.completePendingProfile(session.userId) ??
+      profile =
+          await repository?.completePendingProfile(session.userId) ??
           await repository?.fetchProfile(session.userId);
     } catch (_) {
       profile = await repository?.fetchProfile(session.userId);

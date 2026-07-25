@@ -11,7 +11,10 @@ enum SupabaseConfigurationIssue {
 }
 
 class SupabaseConfiguration {
-  const SupabaseConfiguration({required this.url, required this.publishableKey});
+  const SupabaseConfiguration({
+    required this.url,
+    required this.publishableKey,
+  });
 
   final String url;
   final String publishableKey;
@@ -25,16 +28,13 @@ class SupabaseConfigurationResult {
   });
 
   const SupabaseConfigurationResult.valid(SupabaseConfiguration value)
-      : this._(
-          status: SupabaseConfigurationStatus.valid,
-          configuration: value,
-        );
+    : this._(status: SupabaseConfigurationStatus.valid, configuration: value);
 
   const SupabaseConfigurationResult.missing(SupabaseConfigurationIssue issue)
-      : this._(status: SupabaseConfigurationStatus.missing, issue: issue);
+    : this._(status: SupabaseConfigurationStatus.missing, issue: issue);
 
   const SupabaseConfigurationResult.invalid(SupabaseConfigurationIssue issue)
-      : this._(status: SupabaseConfigurationStatus.invalid, issue: issue);
+    : this._(status: SupabaseConfigurationStatus.invalid, issue: issue);
 
   final SupabaseConfigurationStatus status;
   final SupabaseConfiguration? configuration;

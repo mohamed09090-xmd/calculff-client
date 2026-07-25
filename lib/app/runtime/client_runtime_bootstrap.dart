@@ -17,16 +17,13 @@ class RuntimeBootstrapResult {
   const RuntimeBootstrapResult._({required this.status, this.repository});
 
   const RuntimeBootstrapResult.available(AuthRepository repository)
-      : this._(
-          status: RuntimeBootstrapStatus.available,
-          repository: repository,
-        );
+    : this._(status: RuntimeBootstrapStatus.available, repository: repository);
   const RuntimeBootstrapResult.configMissing()
-      : this._(status: RuntimeBootstrapStatus.configMissing);
+    : this._(status: RuntimeBootstrapStatus.configMissing);
   const RuntimeBootstrapResult.invalidConfiguration()
-      : this._(status: RuntimeBootstrapStatus.invalidConfiguration);
+    : this._(status: RuntimeBootstrapStatus.invalidConfiguration);
   const RuntimeBootstrapResult.failed()
-      : this._(status: RuntimeBootstrapStatus.failed);
+    : this._(status: RuntimeBootstrapStatus.failed);
 
   final RuntimeBootstrapStatus status;
   final AuthRepository? repository;
@@ -40,9 +37,9 @@ class SupabaseClientRuntimeBootstrap implements ClientRuntimeBootstrap {
   SupabaseClientRuntimeBootstrap({
     SupabaseConfigurationResult? configurationResult,
     SecureStorageBackend? secureStorage,
-  })  : _configurationResult =
-            configurationResult ?? SupabaseBuildConfiguration.current,
-        _secureStorage = secureStorage ?? const FlutterSecureStorageBackend();
+  }) : _configurationResult =
+           configurationResult ?? SupabaseBuildConfiguration.current,
+       _secureStorage = secureStorage ?? const FlutterSecureStorageBackend();
 
   final SupabaseConfigurationResult _configurationResult;
   final SecureStorageBackend _secureStorage;
@@ -73,7 +70,9 @@ class SupabaseClientRuntimeBootstrap implements ClientRuntimeBootstrap {
         ),
         debug: false,
       );
-      final pendingStore = PendingProfileStore(SecureValueStore(_secureStorage));
+      final pendingStore = PendingProfileStore(
+        SecureValueStore(_secureStorage),
+      );
       return RuntimeBootstrapResult.available(
         SupabaseAuthRepository(
           client: supabase.client,

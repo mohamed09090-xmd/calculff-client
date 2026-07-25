@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final localeControllerProvider =
     StateNotifierProvider<LocaleController, Locale>((ref) {
-  return LocaleController();
-});
+      return LocaleController();
+    });
 
 final themeModeControllerProvider =
     StateNotifierProvider<ThemeModeController, ThemeMode>((ref) {
-  return ThemeModeController();
-});
+      return ThemeModeController();
+    });
 
 class LocaleController extends StateNotifier<Locale> {
   LocaleController() : super(const Locale('ar'));

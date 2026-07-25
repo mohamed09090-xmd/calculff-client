@@ -8,11 +8,12 @@ final runtimeBootstrapProvider = Provider<ClientRuntimeBootstrap>((ref) {
   return SupabaseClientRuntimeBootstrap();
 });
 
-final authControllerProvider =
-    StateNotifierProvider<AuthController, AuthState>((ref) {
-  final controller = AuthController(
-    runtimeBootstrap: ref.watch(runtimeBootstrapProvider),
-  );
-  Future.microtask(controller.initialize);
-  return controller;
-});
+final authControllerProvider = StateNotifierProvider<AuthController, AuthState>(
+  (ref) {
+    final controller = AuthController(
+      runtimeBootstrap: ref.watch(runtimeBootstrapProvider),
+    );
+    Future.microtask(controller.initialize);
+    return controller;
+  },
+);

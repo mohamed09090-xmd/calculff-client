@@ -26,9 +26,7 @@ Future<void> pumpLocalized(
   }
   await tester.pumpWidget(
     ProviderScope(
-      overrides: [
-        authControllerProvider.overrideWith((ref) => controller),
-      ],
+      overrides: [authControllerProvider.overrideWith((ref) => controller)],
       child: MaterialApp(
         locale: locale,
         supportedLocales: AppLocalizations.supportedLocales,
@@ -51,7 +49,9 @@ void main() {
     await pumpLocalized(tester, const WelcomeScreen(), controller: controller);
     expect(find.text('رصيدك وطلباتك في مكان واحد'), findsOneWidget);
     expect(
-      Directionality.of(tester.element(find.text('رصيدك وطلباتك في مكان واحد'))),
+      Directionality.of(
+        tester.element(find.text('رصيدك وطلباتك في مكان واحد')),
+      ),
       TextDirection.rtl,
     );
   });
@@ -66,12 +66,16 @@ void main() {
       controller: controller,
       locale: const Locale('fr'),
     );
-    expect(find.text('Votre crédit et vos commandes, au même endroit'),
-        findsOneWidget);
     expect(
-      Directionality.of(tester.element(find.text(
-        'Votre crédit et vos commandes, au même endroit',
-      ))),
+      find.text('Votre crédit et vos commandes, au même endroit'),
+      findsOneWidget,
+    );
+    expect(
+      Directionality.of(
+        tester.element(
+          find.text('Votre crédit et vos commandes, au même endroit'),
+        ),
+      ),
       TextDirection.ltr,
     );
   });
@@ -95,7 +99,10 @@ void main() {
     await tester.tap(find.widgetWithText(ElevatedButton, 'إنشاء حساب'));
     await tester.pump();
     expect(find.text('أدخل اسمك الكامل.'), findsOneWidget);
-    expect(find.text('أدخل رقم هاتف صالحًا من 6 إلى 25 محرفًا.'), findsOneWidget);
+    expect(
+      find.text('أدخل رقم هاتف صالحًا من 6 إلى 25 محرفًا.'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('loading disables repeated login submission', (tester) async {
@@ -108,8 +115,9 @@ void main() {
     expect(controller.signInInvocations, 0);
   });
 
-  testWidgets('translated error is shown instead of raw exception',
-      (tester) async {
+  testWidgets('translated error is shown instead of raw exception', (
+    tester,
+  ) async {
     final controller = TestAuthController(
       const AuthState(
         stage: AuthStage.signedOut,

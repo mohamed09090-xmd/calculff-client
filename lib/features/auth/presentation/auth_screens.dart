@@ -68,8 +68,11 @@ class SetupScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Icon(Icons.link_off_rounded,
-              size: 56, color: Theme.of(context).colorScheme.primary),
+          Icon(
+            Icons.link_off_rounded,
+            size: 56,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           const SizedBox(height: 28),
           Text(
             l10n.setupTitle,
@@ -100,9 +103,11 @@ class BootstrapErrorScreen extends ConsumerWidget {
         children: [
           const Icon(Icons.shield_outlined, size: 56),
           const SizedBox(height: 24),
-          Text(l10n.bootstrapErrorTitle,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineMedium),
+          Text(
+            l10n.bootstrapErrorTitle,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           const SizedBox(height: 12),
           Text(
             state.failure?.type == AuthFailureType.invalidConfiguration
@@ -149,11 +154,12 @@ class WelcomeScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 36),
-          Text(l10n.welcomeTitle,
-              style: Theme.of(context).textTheme.displaySmall),
+          Text(
+            l10n.welcomeTitle,
+            style: Theme.of(context).textTheme.displaySmall,
+          ),
           const SizedBox(height: 18),
-          Text(l10n.welcomeBody,
-              style: Theme.of(context).textTheme.bodyLarge),
+          Text(l10n.welcomeBody, style: Theme.of(context).textTheme.bodyLarge),
           const SizedBox(height: 42),
           ElevatedButton(
             onPressed: () => context.go(AppPaths.login),
@@ -172,7 +178,9 @@ class WelcomeScreen extends ConsumerWidget {
             ],
             selected: {locale.languageCode},
             onSelectionChanged: (value) {
-              ref.read(localeControllerProvider.notifier).setLocale(value.first);
+              ref
+                  .read(localeControllerProvider.notifier)
+                  .setLocale(value.first);
             },
           ),
         ],
@@ -242,7 +250,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   suffixIcon: IconButton(
                     tooltip: _obscure ? l10n.showPassword : l10n.hidePassword,
                     onPressed: () => setState(() => _obscure = !_obscure),
-                    icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+                    icon: Icon(
+                      _obscure ? Icons.visibility : Icons.visibility_off,
+                    ),
                   ),
                 ),
                 validator: (value) {
@@ -264,10 +274,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ? null
                     : () {
                         if (_formKey.currentState?.validate() ?? false) {
-                          ref.read(authControllerProvider.notifier).signIn(
-                                _email.text,
-                                _password.text,
-                              );
+                          ref
+                              .read(authControllerProvider.notifier)
+                              .signIn(_email.text, _password.text);
                         }
                       },
                 child: state.isBusy
@@ -282,8 +291,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               child: Text(l10n.forgotPassword),
             ),
             TextButton(
-              onPressed:
-                  state.isBusy ? null : () => context.go(AppPaths.signup),
+              onPressed: state.isBusy
+                  ? null
+                  : () => context.go(AppPaths.signup),
               child: Text('${l10n.noAccount} ${l10n.createAccount}'),
             ),
           ],
@@ -375,7 +385,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 suffixIcon: IconButton(
                   tooltip: _obscure ? l10n.showPassword : l10n.hidePassword,
                   onPressed: () => setState(() => _obscure = !_obscure),
-                  icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+                  icon: Icon(
+                    _obscure ? Icons.visibility : Icons.visibility_off,
+                  ),
                 ),
               ),
               validator: (value) {
@@ -425,7 +437,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   ? null
                   : () {
                       if (_formKey.currentState?.validate() ?? false) {
-                        ref.read(authControllerProvider.notifier).signUp(
+                        ref
+                            .read(authControllerProvider.notifier)
+                            .signUp(
                               fullName: _name.text,
                               phone: _phone.text,
                               email: _email.text,
@@ -441,8 +455,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                   : Text(l10n.createAccount),
             ),
             TextButton(
-              onPressed:
-                  state.isBusy ? null : () => context.go(AppPaths.login),
+              onPressed: state.isBusy ? null : () => context.go(AppPaths.login),
               child: Text('${l10n.alreadyHaveAccount} ${l10n.signIn}'),
             ),
           ],
@@ -467,9 +480,11 @@ class VerifyEmailScreen extends ConsumerWidget {
         children: [
           const Icon(Icons.mark_email_unread_outlined, size: 64),
           const SizedBox(height: 24),
-          Text(l10n.verifyTitle,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineMedium),
+          Text(
+            l10n.verifyTitle,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           const SizedBox(height: 14),
           Text(l10n.verifyBody(_maskEmail(email)), textAlign: TextAlign.center),
           if (state.failure != null) ...[
@@ -489,9 +504,7 @@ class VerifyEmailScreen extends ConsumerWidget {
           OutlinedButton(
             onPressed: state.isBusy || state.resendCooldownSeconds > 0
                 ? null
-                : ref
-                    .read(authControllerProvider.notifier)
-                    .resendConfirmation,
+                : ref.read(authControllerProvider.notifier).resendConfirmation,
             child: Text(
               state.resendCooldownSeconds > 0
                   ? l10n.resendCooldown(state.resendCooldownSeconds)
@@ -578,8 +591,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   : Text(l10n.continueAction),
             ),
             TextButton(
-              onPressed:
-                  state.isBusy ? null : () => context.go(AppPaths.login),
+              onPressed: state.isBusy ? null : () => context.go(AppPaths.login),
               child: Text(l10n.back),
             ),
           ],
@@ -630,7 +642,9 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                 suffixIcon: IconButton(
                   tooltip: _obscure ? l10n.showPassword : l10n.hidePassword,
                   onPressed: () => setState(() => _obscure = !_obscure),
-                  icon: Icon(_obscure ? Icons.visibility : Icons.visibility_off),
+                  icon: Icon(
+                    _obscure ? Icons.visibility : Icons.visibility_off,
+                  ),
                 ),
               ),
               validator: (value) {
@@ -726,6 +740,8 @@ String _maskEmail(String email) {
   final parts = email.split('@');
   if (parts.length != 2 || parts.first.isEmpty) return email;
   final local = parts.first;
-  final visible = local.length <= 2 ? local.substring(0, 1) : local.substring(0, 2);
+  final visible = local.length <= 2
+      ? local.substring(0, 1)
+      : local.substring(0, 2);
   return '$visible•••@${parts.last}';
 }

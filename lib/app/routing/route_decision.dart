@@ -30,15 +30,12 @@ abstract final class RouteDecision {
         location == AppPaths.bootstrap ? null : AppPaths.bootstrap,
       AuthStage.configMissing =>
         location == AppPaths.setup ? null : AppPaths.setup,
-      AuthStage.recoverableError => location == AppPaths.startupError
-          ? null
-          : AppPaths.startupError,
-      AuthStage.passwordRecovery => location == AppPaths.resetPassword
-          ? null
-          : AppPaths.resetPassword,
-      AuthStage.emailUnconfirmed => location == AppPaths.verifyEmail
-          ? null
-          : AppPaths.verifyEmail,
+      AuthStage.recoverableError =>
+        location == AppPaths.startupError ? null : AppPaths.startupError,
+      AuthStage.passwordRecovery =>
+        location == AppPaths.resetPassword ? null : AppPaths.resetPassword,
+      AuthStage.emailUnconfirmed =>
+        location == AppPaths.verifyEmail ? null : AppPaths.verifyEmail,
       AuthStage.signedOut =>
         _signedOutPaths.contains(location) ? null : AppPaths.welcome,
       AuthStage.authenticated =>

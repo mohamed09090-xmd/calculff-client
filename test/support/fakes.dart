@@ -115,11 +115,11 @@ class FakeAuthRepository implements AuthRepository {
 
 class TestAuthController extends AuthController {
   TestAuthController(AuthState initial)
-      : super(
-          runtimeBootstrap: FakeRuntimeBootstrap(
-            const RuntimeBootstrapResult.configMissing(),
-          ),
-        ) {
+    : super(
+        runtimeBootstrap: FakeRuntimeBootstrap(
+          const RuntimeBootstrapResult.configMissing(),
+        ),
+      ) {
     state = initial;
   }
 
