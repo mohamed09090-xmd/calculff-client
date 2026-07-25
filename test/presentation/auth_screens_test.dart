@@ -209,12 +209,15 @@ void main() {
 
   testWidgets('login exposes core semantics', (tester) async {
     final semantics = tester.ensureSemantics();
-    addTearDown(semantics.dispose);
-    final controller = TestAuthController(
-      const AuthState(stage: AuthStage.signedOut),
-    );
-    await pumpLocalized(tester, const LoginScreen(), controller: controller);
-    expect(find.bySemanticsLabel('حقل البريد الإلكتروني'), findsOneWidget);
-    expect(find.bySemanticsLabel('حقل كلمة المرور'), findsOneWidget);
+    try {
+      final controller = TestAuthController(
+        const AuthState(stage: AuthStage.signedOut),
+      );
+      await pumpLocalized(tester, const LoginScreen(), controller: controller);
+      expect(find.bySemanticsLabel('حقل البريد الإلكتروني'), findsOneWidget);
+      expect(find.bySemanticsLabel('حقل كلمة المرور'), findsOneWidget);
+    } finally {
+      semantics.dispose();
+    }
   });
 }
