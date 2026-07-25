@@ -44,15 +44,7 @@ flutter pub get
 flutter run
 ```
 
-يفتح التطبيق شاشة إعداد آمنة ولا يجري اتصالًا شبكيًا.
-
-لأن ملف Gradle wrapper الثنائي لا يحفظ في المستودع، نفّذ مرة واحدة بعد الاستنساخ:
-
-```bash
-flutter create --platforms=android --org com.gm0h1 --project-name calculff_client .
-```
-
-ثم تحقق أن `android/app/build.gradle` ما زال يستخدم `com.gm0h1.calculffclient`.
+يفتح التطبيق شاشة إعداد آمنة ولا يجري اتصالًا شبكيًا. ملفات Flutter metadata وGradle wrapper المطلوبة محفوظة في المستودع، لذلك لا يحتاج الاستنساخ إلى إعادة توليد المشروع.
 
 ## التشغيل بإعداد حقيقي
 
