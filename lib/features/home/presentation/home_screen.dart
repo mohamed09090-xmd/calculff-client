@@ -37,28 +37,46 @@ class HomeScreen extends ConsumerWidget {
             children: [
               const Icon(Icons.verified_outlined),
               const SizedBox(width: 8),
-              Text(l10n.accountConfirmed),
+              Expanded(child: Text(l10n.accountConfirmed)),
             ],
           ),
-          const SizedBox(height: 36),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 26),
-            decoration: BoxDecoration(
-              border: Border.symmetric(
-                horizontal: BorderSide(
-                  color: Theme.of(context).colorScheme.outlineVariant,
+          const SizedBox(height: 28),
+          Semantics(
+            button: true,
+            label: l10n.browseCatalog,
+            child: Card(
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: () => context.push(AppPaths.catalog),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.storefront_outlined, size: 40),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l10n.browseCatalog,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(l10n.browseCatalogBody),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(Icons.chevron_right),
+                    ],
+                  ),
                 ),
               ),
             ),
-            child: Column(
-              children: [
-                const Icon(Icons.layers_outlined, size: 44),
-                const SizedBox(height: 14),
-                Text(l10n.catalogNextPhase, textAlign: TextAlign.center),
-              ],
-            ),
           ),
-          const SizedBox(height: 36),
+          const SizedBox(height: 28),
           SegmentedButton<String>(
             segments: [
               ButtonSegment(value: 'ar', label: Text(l10n.arabic)),

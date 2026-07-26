@@ -7,6 +7,11 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/application/auth_providers.dart';
 import '../../features/auth/domain/auth_models.dart';
 import '../../features/auth/presentation/auth_screens.dart';
+import '../../features/catalog/domain/catalog_game.dart';
+import '../../features/catalog/presentation/catalog_games_screen.dart';
+import '../../features/catalog/presentation/catalog_navigation.dart';
+import '../../features/catalog/presentation/catalog_offer_details_screen.dart';
+import '../../features/catalog/presentation/catalog_offers_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import 'route_decision.dart';
@@ -69,6 +74,34 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppPaths.profile,
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: AppPaths.catalog,
+        builder: (context, state) => const CatalogGamesScreen(),
+      ),
+      GoRoute(
+        path: '${AppPaths.catalog}/games/:gameId/offers',
+        builder: (context, state) {
+          final game = state.extra;
+          if (game is! CatalogGame ||
+              game.id != state.pathParameters['gameId']) {
+            return const CatalogRouteErrorScreen();
+          }
+          return CatalogOffersScreen(game: game);
+        },
+      ),
+      GoRoute(
+        path: '${AppPaths.catalog}/games/:gameId/offers/:offerId',
+        builder: (context, state) {
+          final data = state.extra;
+          if (data is! CatalogOfferRouteData ||
+              data.game.id != state.pathParameters['gameId'] ||
+              data.offer.id != state.pathParameters['offerId'] ||
+              data.offer.gameId != data.game.id) {
+            return const CatalogRouteErrorScreen();
+          }
+          return CatalogOfferDetailsScreen(data: data);
+        },
       ),
     ],
   );
