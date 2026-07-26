@@ -26,9 +26,7 @@ class SupabaseCatalogGateway implements CatalogGateway {
   }
 
   @override
-  Future<List<Map<String, Object?>>> fetchPublishedOffers(
-    String gameId,
-  ) async {
+  Future<List<Map<String, Object?>>> fetchPublishedOffers(String gameId) async {
     final rows = await _client
         .from('public_offers')
         .select(offerSelection)

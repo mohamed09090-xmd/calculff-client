@@ -1,4 +1,3 @@
-import '../domain/catalog_failure.dart';
 import '../domain/catalog_game.dart';
 import '../domain/catalog_offer.dart';
 import '../domain/catalog_repository.dart';
@@ -15,12 +14,13 @@ class SupabaseCatalogRepository implements CatalogRepository {
   Future<List<CatalogGame>> fetchActiveGames() async {
     try {
       final rows = await _gateway.fetchActiveGames();
-      final games = rows
-          .map(CatalogGameDto.fromMap)
-          .map((dto) => dto.toDomain())
-          .where((game) => game.isActive)
-          .toList(growable: false)
-        ..sort(_compareGames);
+      final games =
+          rows
+              .map(CatalogGameDto.fromMap)
+              .map((dto) => dto.toDomain())
+              .where((game) => game.isActive)
+              .toList(growable: false)
+            ..sort(_compareGames);
       return List<CatalogGame>.unmodifiable(games);
     } catch (error) {
       throw CatalogErrorMapper.map(error);
@@ -32,14 +32,13 @@ class SupabaseCatalogRepository implements CatalogRepository {
     if (!game.isActive) return const <CatalogOffer>[];
     try {
       final rows = await _gateway.fetchPublishedOffers(game.id);
-      final offers = rows
-          .map(CatalogOfferDto.fromMap)
-          .map((dto) => dto.toDomain())
-          .where(
-            (offer) => offer.isPublished && offer.gameId == game.id,
-          )
-          .toList(growable: false)
-        ..sort(_compareOffers);
+      final offers =
+          rows
+              .map(CatalogOfferDto.fromMap)
+              .map((dto) => dto.toDomain())
+              .where((offer) => offer.isPublished && offer.gameId == game.id)
+              .toList(growable: false)
+            ..sort(_compareOffers);
       return List<CatalogOffer>.unmodifiable(offers);
     } catch (error) {
       throw CatalogErrorMapper.map(error);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show NumberFormat;
 
 import '../../../app/routing/route_decision.dart';
 import '../../../l10n/generated/app_localizations.dart';
@@ -23,9 +23,7 @@ class CatalogOffersScreen extends ConsumerWidget {
     final languageCode = locale.languageCode;
     final formatter = NumberFormat.decimalPattern(locale.toLanguageTag());
     final state = ref.watch(catalogOffersControllerProvider(game));
-    final controller = ref.read(
-      catalogOffersControllerProvider(game).notifier,
-    );
+    final controller = ref.read(catalogOffersControllerProvider(game).notifier);
 
     return Scaffold(
       appBar: AppBar(title: Text(game.localizedName(languageCode))),

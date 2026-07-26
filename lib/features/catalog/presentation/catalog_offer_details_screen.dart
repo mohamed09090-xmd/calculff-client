@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show NumberFormat;
 
 import '../../../l10n/generated/app_localizations.dart';
 import 'catalog_navigation.dart';
@@ -140,10 +140,7 @@ class CatalogRouteErrorScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.link_off_outlined, size: 48),
                 const SizedBox(height: 16),
-                Text(
-                  l10n.catalogUnavailableBody,
-                  textAlign: TextAlign.center,
-                ),
+                Text(l10n.catalogUnavailableBody, textAlign: TextAlign.center),
                 const SizedBox(height: 16),
                 FilledButton(
                   onPressed: () => Navigator.of(context).maybePop(),

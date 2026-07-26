@@ -22,10 +22,7 @@ class CatalogGameDto {
       slug: reader.requiredString('slug', maxLength: 64),
       nameAr: reader.requiredString('name_ar'),
       nameFr: reader.requiredString('name_fr'),
-      rewardUnitCode: reader.requiredString(
-        'reward_unit_code',
-        maxLength: 32,
-      ),
+      rewardUnitCode: reader.requiredString('reward_unit_code', maxLength: 32),
       rewardUnitNameAr: reader.requiredString('reward_unit_name_ar'),
       rewardUnitNameFr: reader.requiredString('reward_unit_name_fr'),
       isActive: reader.requiredBool('is_active'),

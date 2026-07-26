@@ -70,10 +70,7 @@ class CatalogListView<T> extends StatelessWidget {
               separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 if (state.failure != null && index == 0) {
-                  return _InlineError(
-                    failure: state.failure,
-                    onRetry: onRetry,
-                  );
+                  return _InlineError(failure: state.failure, onRetry: onRetry);
                 }
                 final itemIndex = index - (state.failure == null ? 0 : 1);
                 return itemBuilder(context, state.items[itemIndex]);
@@ -184,10 +181,7 @@ class _InlineError extends StatelessWidget {
   }
 }
 
-String _failureMessage(
-  AppLocalizations l10n,
-  CatalogFailure? failure,
-) {
+String _failureMessage(AppLocalizations l10n, CatalogFailure? failure) {
   return switch (failure?.type) {
     CatalogFailureType.networkUnavailable => l10n.catalogNetworkError,
     CatalogFailureType.invalidData => l10n.catalogInvalidData,

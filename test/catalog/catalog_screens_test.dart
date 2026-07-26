@@ -78,6 +78,7 @@ Future<void> pumpGames(
   }
   await tester.pumpWidget(
     ProviderScope(
+      key: UniqueKey(),
       overrides: [
         catalogGamesControllerProvider.overrideWith((ref) => controller),
       ],
@@ -110,6 +111,7 @@ Future<void> pumpOffers(
   }
   await tester.pumpWidget(
     ProviderScope(
+      key: UniqueKey(),
       overrides: [
         catalogOffersControllerProvider.overrideWith(
           (ref, requestedGame) => controller,
@@ -131,21 +133,20 @@ Future<void> pumpOffers(
 
 void main() {
   testWidgets('games render Arabic RTL and French LTR text', (tester) async {
-    final controller = FixedCatalogController<CatalogGame>(
-      const CatalogListState(
-        status: CatalogLoadStatus.data,
-        items: [game],
-      ),
+    final arabicController = FixedCatalogController<CatalogGame>(
+      const CatalogListState(status: CatalogLoadStatus.data, items: [game]),
     );
-    addTearDown(controller.dispose);
-    await pumpGames(tester, controller);
+    await pumpGames(tester, arabicController);
     expect(find.text('فري فاير'), findsOneWidget);
     expect(
       Directionality.of(tester.element(find.text('فري فاير'))),
       TextDirection.rtl,
     );
 
-    await pumpGames(tester, controller, locale: const Locale('fr'));
+    final frenchController = FixedCatalogController<CatalogGame>(
+      const CatalogListState(status: CatalogLoadStatus.data, items: [game]),
+    );
+    await pumpGames(tester, frenchController, locale: const Locale('fr'));
     expect(find.text('Free Fire'), findsOneWidget);
     expect(
       Directionality.of(tester.element(find.text('Free Fire'))),
@@ -157,14 +158,12 @@ void main() {
     final loading = FixedCatalogController<CatalogGame>(
       const CatalogListState(status: CatalogLoadStatus.loading),
     );
-    addTearDown(loading.dispose);
     await pumpGames(tester, loading);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
 
     final empty = FixedCatalogController<CatalogGame>(
       const CatalogListState(status: CatalogLoadStatus.empty),
     );
-    addTearDown(empty.dispose);
     await pumpGames(tester, empty);
     expect(find.text('لا توجد ألعاب متاحة'), findsOneWidget);
 
@@ -174,7 +173,6 @@ void main() {
         failure: CatalogFailure(CatalogFailureType.networkUnavailable),
       ),
     );
-    addTearDown(failed.dispose);
     await pumpGames(tester, failed);
     expect(find.textContaining('اتصال الإنترنت'), findsOneWidget);
     await tester.tap(find.text('إعادة المحاولة'));
@@ -183,12 +181,8 @@ void main() {
 
   testWidgets('offers support small screens and large text', (tester) async {
     final controller = FixedCatalogController<CatalogOffer>(
-      const CatalogListState(
-        status: CatalogLoadStatus.data,
-        items: [offer],
-      ),
+      const CatalogListState(status: CatalogLoadStatus.data, items: [offer]),
     );
-    addTearDown(controller.dispose);
     await pumpOffers(
       tester,
       controller,
@@ -234,37 +228,24 @@ void main() {
       ),
     );
     final gamesController = FixedCatalogController<CatalogGame>(
-      const CatalogListState(
-        status: CatalogLoadStatus.data,
-        items: [game],
-      ),
+      const CatalogListState(status: CatalogLoadStatus.data, items: [game]),
     );
     final offersController = FixedCatalogController<CatalogOffer>(
-      const CatalogListState(
-        status: CatalogLoadStatus.data,
-        items: [offer],
-      ),
+      const CatalogListState(status: CatalogLoadStatus.data, items: [offer]),
     );
-    addTearDown(authController.dispose);
-    addTearDown(gamesController.dispose);
-    addTearDown(offersController.dispose);
 
     final router = GoRouter(
       initialLocation: AppPaths.home,
       routes: [
-        GoRoute(
-          path: AppPaths.home,
-          builder: (_, _) => const HomeScreen(),
-        ),
+        GoRoute(path: AppPaths.home, builder: (_, _) => const HomeScreen()),
         GoRoute(
           path: AppPaths.catalog,
           builder: (_, _) => const CatalogGamesScreen(),
         ),
         GoRoute(
           path: '${AppPaths.catalog}/games/:gameId/offers',
-          builder: (_, state) => CatalogOffersScreen(
-            game: state.extra! as CatalogGame,
-          ),
+          builder: (_, state) =>
+              CatalogOffersScreen(game: state.extra! as CatalogGame),
         ),
       ],
     );
@@ -274,9 +255,7 @@ void main() {
       ProviderScope(
         overrides: [
           authControllerProvider.overrideWith((ref) => authController),
-          catalogGamesControllerProvider.overrideWith(
-            (ref) => gamesController,
-          ),
+          catalogGamesControllerProvider.overrideWith((ref) => gamesController),
           catalogOffersControllerProvider.overrideWith(
             (ref, requestedGame) => offersController,
           ),

@@ -16,7 +16,7 @@ abstract final class CatalogErrorMapper {
       return const CatalogFailure(CatalogFailureType.sessionExpired);
     }
     if (error is PostgrestException) {
-      final code = error.code.toUpperCase();
+      final code = error.code?.toUpperCase() ?? '';
       if (code == '42501' ||
           code == '28000' ||
           code == 'PGRST301' ||
