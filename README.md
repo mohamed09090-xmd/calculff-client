@@ -4,17 +4,19 @@
 
 ## الحالة الحالية
 
-المرحلة الحالية تنفذ Foundation + Authentication فقط:
+النسخة الحالية تنفذ Foundation + Authentication + Customer Catalog:
 
 - Bootstrap آمن مع حالة واضحة عند غياب إعداد Supabase.
 - تسجيل الدخول وإنشاء الحساب وتأكيد البريد.
 - طلب استرجاع كلمة المرور والتعامل مع deep link لإعادة التعيين.
 - جلسة Supabase محفوظة في `flutter_secure_storage`.
 - ملف شخصي يقرأ ويحدّث `full_name` و`phone` و`locale` وفق RLS الحالي.
-- Home هيكلي دون عروض أو طلبات وهمية.
+- كتالوج حقيقي يقرأ الألعاب النشطة والعروض المنشورة من Supabase الحالي.
+- شاشة ألعاب، شاشة عروض اللعبة، وتفاصيل العرض العامة.
+- Pull-to-refresh وloading وempty وerror وretry.
 - العربية RTL والفرنسية LTR، مع الوضع الفاتح والداكن.
 
-لم تُنفذ بعد: كتالوج الألعاب والعروض، إنشاء الطلبات، الدفع، الإشعارات، أو أي تعديل Backend.
+لم تُنفذ بعد: إنشاء الطلبات، اختيار وسيلة الدفع، رفع إثبات الدفع، المفضلة، الإشعارات، Realtime، أو cache دائم للكتالوج.
 
 ## الهوية والمتطلبات
 
@@ -30,12 +32,17 @@
 
 `mohamed09090-xmd/calculff` هو مصدر الحقيقة للجداول وRLS وRPCs. هذا المستودع لا يدير migrations ولا يعدل Hosted Supabase.
 
-العقد المستخدم حاليًا:
+العقود المستخدمة:
 
 - `profiles(id, email, full_name, phone, locale)`.
-- trigger ينشئ profile بالبريد عند إنشاء Auth user.
-- المستخدم المصادق يقرأ صفه ويحدّث فقط `full_name`, `phone`, `locale`.
-- إكمال الملف مطلوب لاحقًا قبل `create_order`.
+- `games(id, slug, name_ar, name_fr, reward_unit_code, reward_unit_name_ar, reward_unit_name_fr, is_active, sort_order)`.
+- `public_offers(id, game_id, name_ar, name_fr, reward_quantity, sale_price_dzd, is_published, sort_order)`.
+- المستخدم المصادق يقرأ الألعاب النشطة فقط.
+- المستخدم المصادق يقرأ العرض المنشور فقط عندما تكون لعبته نشطة.
+- `public_offers` لا يحتوي أعمدة تكلفة أو ربح أو مخزون، ولا يعرض التطبيق أي بيانات إدارية.
+- RLS في PostgreSQL هو حاجز الأمان الأساسي، مع فلاتر دفاعية إضافية داخل Repository.
+
+راجع `docs/CATALOG.md` للتفاصيل.
 
 ## التشغيل دون إعداد Supabase
 
@@ -70,6 +77,12 @@ calculffclient://auth-callback
 
 يجب إضافته يدويًا إلى Redirect URLs في Supabase Dashboard مع إعداد SMTP عند الحاجة.
 
+## Catalog flow
+
+`Home → active games → published offers → offer details`
+
+كل مسارات الكتالوج محمية. انتهاء الجلسة أو Logout يعيد المستخدم إلى Auth ولا يبقي مسار الكتالوج مفتوحًا. الاستعلامات تستخدم ترتيبًا مستقرًا حسب `sort_order` ثم `id`، ولا تستخدم بيانات وهمية أو Hosted Supabase داخل الاختبارات.
+
 ## الأوامر
 
 ```bash
@@ -89,13 +102,14 @@ CI لا يستخدم Supabase حقيقيًا ويرفع `coverage/lcov.info` وD
 lib/app
 lib/core
 lib/features/auth/{application,domain,infrastructure,presentation}
+lib/features/catalog/{application,domain,infrastructure,presentation}
 lib/features/home/presentation
 lib/features/profile/presentation
 lib/features/settings/application
 lib/l10n
 ```
 
-راجع `docs/ARCHITECTURE.md` و`docs/AUTHENTICATION.md` و`docs/SECURITY_MODEL.md`.
+Widgets لا تستدعي Supabase مباشرة. راجع `docs/ARCHITECTURE.md` و`docs/AUTHENTICATION.md` و`docs/SECURITY_MODEL.md` و`docs/CATALOG.md`.
 
 ## منع الأسرار
 

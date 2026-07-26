@@ -12,6 +12,13 @@ abstract final class AppPaths {
   static const resetPassword = '/reset-password';
   static const home = '/home';
   static const profile = '/profile';
+  static const catalog = '/catalog';
+
+  static String catalogOffers(String gameId) => '$catalog/games/$gameId/offers';
+
+  static String catalogOfferDetails(String gameId, String offerId) {
+    return '${catalogOffers(gameId)}/$offerId';
+  }
 }
 
 abstract final class RouteDecision {
@@ -22,7 +29,16 @@ abstract final class RouteDecision {
     AppPaths.forgotPassword,
   };
 
-  static const _authenticatedPaths = {AppPaths.home, AppPaths.profile};
+  static const _authenticatedExactPaths = {
+    AppPaths.home,
+    AppPaths.profile,
+    AppPaths.catalog,
+  };
+
+  static bool _isAuthenticatedPath(String location) {
+    return _authenticatedExactPaths.contains(location) ||
+        location.startsWith('${AppPaths.catalog}/');
+  }
 
   static String? redirect(AuthState auth, String location) {
     return switch (auth.stage) {
@@ -39,7 +55,7 @@ abstract final class RouteDecision {
       AuthStage.signedOut =>
         _signedOutPaths.contains(location) ? null : AppPaths.welcome,
       AuthStage.authenticated =>
-        _authenticatedPaths.contains(location) ? null : AppPaths.home,
+        _isAuthenticatedPath(location) ? null : AppPaths.home,
     };
   }
 }
